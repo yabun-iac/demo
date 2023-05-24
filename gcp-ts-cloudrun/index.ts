@@ -13,7 +13,7 @@ const location = gcp.config.region || "us-central1";
 
 // Build a Docker image from our sample Ruby app and put it to Google Container Registry.
 // Note: Run `gcloud auth configure-docker` in your command line to configure auth to GCR.
-const imageName = "angular-app";
+const imageName = "java-app";
 const myImage = new docker.Image(imageName, {
     imageName: pulumi.interpolate`gcr.io/${gcp.config.project}/${imageName}:v1.0.0`,
     build: {
@@ -22,7 +22,7 @@ const myImage = new docker.Image(imageName, {
 });
 
 // Deploy to Cloud Run. Some extra parameters like concurrency and memory are set for illustration purpose.
-const angularService = new gcp.cloudrun.Service("angular", {
+const angularService = new gcp.cloudrun.Service("java", {
     location,
     template: {
         spec: {
@@ -43,7 +43,7 @@ const angularService = new gcp.cloudrun.Service("angular", {
 });
 
 // Open the service to public unrestricted access
-const iamAngular = new gcp.cloudrun.IamMember("angular-everyone", {
+const iamAngular = new gcp.cloudrun.IamMember("java-everyone", {
     service: angularService.name,
     location,
     role: "roles/run.invoker",
