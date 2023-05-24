@@ -29,7 +29,7 @@ const angularService = new gcp.cloudrun.Service("angular", {
             containers: [{
                 image: myImage.imageName,
                 ports: [{
-                  containerPort: 80
+                  containerPort: 8080
                 }],
                 resources: {
                     limits: {
